@@ -1,0 +1,606 @@
+import os
+import pygame
+
+pygame.init()
+
+pygame.mixer.set_num_channels(50)
+
+def pitchButton(event,spin):
+    
+    pos = pygame.mouse.get_pos()
+    if pos[0] > 58 and pos[1] > 511 and pos[0] < 85 and pos[1] < 606:
+        if event.y == 1 and spin != 2:
+            spin+=event.y
+        if event.y == -1 and spin != 0:
+            spin+=event.y
+       
+    return spin
+        
+
+def keyPlay(key,angle):
+    music = pygame.mixer.Sound(f"Audio\keys\{key}.wav").play()
+    music.set_volume(-(angle - 150)/300)
+    
+    press = True
+    return press
+def keyPlayB(key,angle):
+    key = str(key)
+    
+    if len(key) == 2:
+        music = pygame.mixer.Sound(f"Audio\keys\{key[1].upper()}b1.wav").play()
+    else:
+        music = pygame.mixer.Sound(f"Audio\keys\{key[1].upper()}b{key[2]}.wav").play()
+
+    music.set_volume(-(angle - 150)/300)
+    
+    press = True
+    return press
+
+def keyPress(screen,width,height,key,booli):
+    if booli:
+       screen.blit(key,(0,0,width,height)) 
+def keyPressB(screen,width,height,key,booli):
+    if booli:
+       screen.blit(key,(0,0,width,height)) 
+
+def keysImage(key):
+    key = pygame.image.load(f"Images\keysPress\key{key}.png").convert_alpha()
+    return key
+def keysImageB(key):
+    key = pygame.image.load(f"Images\keysPress\{key}.png").convert_alpha()
+    return key
+
+def keysLoad(key):
+    key = pygame.image.load(f"Images\Loading animation\\{key}.png").convert_alpha()
+    return key
+
+def keysBlitLoad(screen,width,height,key):
+    screen.blit(key,(0,70,width,height))
+   
+
+
+def loadingScreen():
+    
+    x = 0
+    y = 30
+    os.environ['SDL_VIDEO_WINDOW_POS'] = f"{x},{y}"
+
+    width,height = 500,470
+    screen = pygame.display.set_mode([width,height])
+    pygame.display.set_caption("Loading......")
+    icon = pygame.image.load("Images\Loading keys.png")
+    pygame.display.set_icon(icon)
+
+    title = pygame.image.load("Images\Loading animation\Title.png")
+    screen.blit(title,(150,20))
+
+    loadingd = pygame.image.load("Images\Loading animation\Loading..png")   
+    screen.blit(loadingd,(135,400)) 
+    loadingdd = pygame.image.load("Images\Loading animation\Loading...png")
+    loadingddd = pygame.image.load("Images\Loading animation\Loading....png")
+    loadingdddd = pygame.image.load("Images\Loading animation\Loading.....png")
+    
+
+    key1 = keysLoad("1")
+    key2 = keysLoad("2")
+    key3 = keysLoad("3")
+    key4 = keysLoad("4")
+    key5 = keysLoad("5")
+    key6 = keysLoad("6")
+    key7 = keysLoad("7")
+    key8 = keysLoad("8")
+
+    time = 1
+    seconds = 0
+    secondsp = 0
+    run = True 
+    
+    fps = 30
+    clock = pygame.time.Clock()
+
+    while run:
+        image = pygame.image.load("Images\Loading keys.png").convert_alpha()
+        screen.blit(image,(0,70,width,height))
+
+        for i in range (1,9):
+            if seconds>=fps*i/2:
+               
+                keysBlitLoad(screen,width,height,eval(f"key{i}"))
+
+        if secondsp%(fps) == 0 and secondsp !=0 and secondsp < fps*9:
+            music = pygame.mixer.Sound(f"Images\Loading animation\\{int((secondsp/fps))}.wav").play()  
+            music.set_volume(0.4)
+
+        if seconds == fps*time:
+            run = False
+            main()    
+        
+            
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                break
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_RETURN:
+                    print(pygame.mouse.get_pos())
+            
+            
+                    
+        if secondsp%fps == 0 :
+            if int(secondsp/fps) == 1:
+                screen.blit(loadingdd,(135,400))
+            elif int(secondsp/fps) == 2:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingddd,(135,400))
+            elif int(secondsp/fps) == 3:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingdddd,(135,400))
+            elif int(secondsp/fps) == 4:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingd,(135,400))
+            
+            elif int(secondsp/fps) == 5:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingdd,(135,400))
+            elif int(secondsp/fps) == 6:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingddd,(135,400))
+            elif int(secondsp/fps) == 7:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingdddd,(135,400))
+            elif int(secondsp/fps) == 8:
+                pygame.draw.rect(screen,"black",(135,400,250,40))
+                screen.blit(loadingd,(135,400))
+            
+        clock.tick(fps)        
+        pygame.display.update()
+
+        seconds += 1
+        secondsp += 2
+   
+
+
+def main():
+
+    
+    image = pygame.image.load("Images\Synth.jpg").convert_alpha()
+    volume0 = pygame.image.load("Images\Buttons\\volume.png").convert_alpha()
+    pitchButtonDown = pygame.image.load("Images\pitchButtonDown.png").convert_alpha()
+    pitchButtonMid = pygame.image.load("Images\pitchButtonMid.png").convert_alpha()
+    pitchButtonUp = pygame.image.load("Images\pitchButtonUp.png").convert_alpha()
+    lightON = pygame.image.load("Images\lightON.png").convert_alpha()
+    lightOFF = pygame.image.load("Images\lightOFF.png").convert_alpha()
+    ONOFF = pygame.image.load("Images\ONOFF.png").convert_alpha()
+
+    Letters = pygame.image.load("Images\Letters.png").convert_alpha()
+    LettersB = pygame.image.load("Images\LettersB.png").convert_alpha()
+    Letters7 = pygame.image.load("Images\Letters7.png").convert_alpha()
+    Notes1 = pygame.image.load("Images\\Notes1.png").convert_alpha()
+    Notes4 = pygame.image.load("Images\\Notes4.png").convert_alpha()
+    Notes7 = pygame.image.load("Images\\Notes7.png").convert_alpha()
+
+
+    keyc = keysImage("c")
+    keyd = keysImage("d")
+    keye = keysImage("e")
+    keyf = keysImage("f")
+    keyg = keysImage("g")
+    keya = keysImage("a")
+    keyb = keysImage("b")
+    keyc2 = keysImage("c2")
+    keyd2 = keysImage("d2")
+    keye2 = keysImage("e2")
+    keyf2 = keysImage("f2")
+    keyg2 = keysImage("g2")
+    keya2 = keysImage("a2")
+    keyb2 = keysImage("b2")
+    keyc3 = keysImage("c3")
+    keyd3 = keysImage("d3")
+    keye3 = keysImage("e3")
+    keyf3 = keysImage("f3")
+    keyg3 = keysImage("g3")
+    keya3 = keysImage("a3")
+    keyb3 = keysImage("b3")
+    keyl  = keysImage("l")
+    keycd  = keysImageB("cd")
+    keyde  = keysImageB("de")
+    keyfg  = keysImageB("fg")
+    keyga  = keysImageB("ga")
+    keyab  = keysImageB("ab")
+    keycd2  = keysImageB("cd2")
+    keyde2  = keysImageB("de2")
+    keyfg2  = keysImageB("fg2")
+    keyga2  = keysImageB("ga2")
+    keyab2  = keysImageB("ab2")
+    keycd3  = keysImageB("cd3")
+    keyde3  = keysImageB("de3")
+    keyfg3  = keysImageB("fg3")
+    keyga3  = keysImageB("ga3")
+    keyab3  = keysImageB("ab3")
+   
+    
+    
+    width, height = 1370,710
+
+    screen = pygame.display.set_mode([width, height])
+
+    pygame.display.set_caption("PyPiano") 
+
+    
+    cpress = False
+    dpress = False
+    epress = False
+    fpress = False
+    gpress = False
+    apress = False
+    bpress = False
+    c2press = False
+    d2press = False
+    e2press = False
+    f2press = False
+    g2press = False
+    a2press = False
+    b2press = False
+    c3press = False
+    d3press = False
+    e3press = False
+    f3press = False
+    g3press = False
+    a3press = False
+    b3press = False
+    lpress = False
+    cdpress = False
+    depress = False
+    fgpress = False
+    gapress = False
+    abpress = False
+    cd2press = False
+    de2press = False
+    fg2press = False
+    ga2press = False
+    ab2press = False
+    cd3press = False
+    de3press = False
+    fg3press = False
+    ga3press = False
+    ab3press = False
+    
+
+    run = True 
+    volume30 = pygame.transform.rotate(volume0,30)
+    volume60 = pygame.transform.rotate(volume0,60)
+    volume90 = pygame.transform.rotate(volume0,90)
+    volume120 = pygame.transform.rotate(volume0,120)
+    volume150 = pygame.transform.rotate(volume0,150)
+    volume30n = pygame.transform.rotate(volume0,-30)
+    volume60n = pygame.transform.rotate(volume0,-60)
+    volume90n = pygame.transform.rotate(volume0,-90)
+    volume120n = pygame.transform.rotate(volume0,-120)
+    volume150n = pygame.transform.rotate(volume0,-150)
+    
+    fps = 120
+    clock = pygame.time.Clock()
+ 
+    angle = 0
+    spin = 1
+    pitch = 0 
+    showLetters = False
+    showNotes = False
+
+    while run:
+
+        screen.blit(image,(0,0,width,height))
+         
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_RETURN:
+                    print(pygame.mouse.get_pos())
+            if event.type == pygame.QUIT:
+                run = False
+                break
+            if event.type == pygame.MOUSEWHEEL:
+                pos = pygame.mouse.get_pos()
+                if pos[0] > 120 and pos[1] > 103 and pos[0] < 170 and pos[1] < 140:
+                    if event.y == 1 and angle != 150:
+                        angle+=30
+                    if event.y == -1 and angle != -150:
+                        angle-=30
+
+                spin = pitchButton(event,spin)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                if pos[0] > 223 and pos[1] > 326 and pos[0] < 245 and pos[1] < 349:
+                    if event.button == 1:
+                        showLetters = not showLetters
+                if pos[0] > 273 and pos[1] > 326 and pos[0] < 295 and pos[1] < 349:
+                    if event.button == 1:
+                        showNotes = not showNotes
+                
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_RETURN:
+                    print(pygame.mouse.get_pos())
+
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP and spin!=2:
+                    spin+=1
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN and spin!=0:
+                    spin-=1
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and spin!=2:
+                    spin+=1
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_BACKQUOTE and spin!=0:
+                    spin-=1
+                    
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_TAB :  
+                    cpress = keyPlay("c".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_q:
+                    dpress = keyPlay("d".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_w:
+                    epress = keyPlay("e".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_e:
+                    fpress = keyPlay("f".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_r:
+                    gpress = keyPlay("g".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_t:
+                    apress = keyPlay("a".upper()+f"{pitch + 4}",angle)
+                if event.key == pygame.K_y:
+                    bpress = keyPlay("b".upper()+f"{pitch + 4}",angle)
+
+                if event.key == pygame.K_1:
+                    cdpress = keyPlayB("cd"+str(pitch + 4),angle)
+                if event.key == pygame.K_2:
+                    depress = keyPlayB("de"+str(pitch + 4),angle)
+                if event.key == pygame.K_4:
+                    fgpress = keyPlayB("fg"+str(pitch + 4),angle)
+                if event.key == pygame.K_5:
+                    gapress = keyPlayB("ga"+str(pitch + 4),angle)
+                if event.key == pygame.K_6:
+                    abpress = keyPlayB("ab"+str(pitch + 4),angle)
+               
+                if pitch !=3:
+                    if event.key == pygame.K_u:
+                        c2press = keyPlay("c".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_i:
+                        d2press = keyPlay("d".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_o:
+                        e2press = keyPlay("e".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_p:
+                        f2press = keyPlay("f".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_LEFTBRACKET:
+                        g2press = keyPlay("g".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_RIGHTBRACKET:
+                        a2press = keyPlay("a".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_BACKSLASH:
+                        b2press = keyPlay("b".upper()+f"{pitch + 5}",angle)
+                    if event.key == pygame.K_z:
+                        c3press = keyPlay("c".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_x:
+                        d3press = keyPlay("d".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_c:
+                        e3press = keyPlay("e".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_v:
+                        f3press = keyPlay("f".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_b:
+                        g3press = keyPlay("g".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_n:
+                        a3press = keyPlay("a".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_m:
+                        b3press = keyPlay("b".upper()+f"{pitch + 6}",angle)
+                    if event.key == pygame.K_COMMA:
+                        lpress = keyPlay("B0",angle)
+                
+                    if event.key == pygame.K_8:
+                        cd2press = keyPlayB("cd"+str(pitch + 5),angle)
+                    if event.key == pygame.K_9:
+                        de2press = keyPlayB("de"+str(pitch + 5),angle)
+                    if event.key == pygame.K_MINUS:
+                        fg2press = keyPlayB("fg"+str(pitch + 5),angle)
+                    if event.key == pygame.K_EQUALS:
+                        ga2press = keyPlayB("ga"+str(pitch + 5),angle)
+                    if event.key == pygame.K_BACKSPACE:
+                        ab2press = keyPlayB("ab"+str(pitch + 5),angle)
+                    if event.key == pygame.K_s:
+                        cd3press = keyPlayB("cd"+str(pitch + 6),angle)
+                    if event.key == pygame.K_d:
+                        de3press = keyPlayB("de"+str(pitch + 6),angle)
+                    if event.key == pygame.K_g:
+                        fg3press = keyPlayB("fg"+str(pitch + 6),angle)
+                    if event.key == pygame.K_h:
+                        ga3press = keyPlayB("ga"+str(pitch + 6),angle)
+                    if event.key == pygame.K_j:
+                        ab3press = keyPlayB("ab"+str(pitch + 6),angle)
+
+            if event.type == pygame.KEYUP :
+                if event.key == pygame.K_TAB:
+                    cpress = False
+                if event.key == pygame.K_q:
+                    dpress = False
+                if event.key == pygame.K_w:
+                    epress = False
+                if event.key == pygame.K_e:
+                    fpress = False
+                if event.key == pygame.K_r:
+                    gpress = False
+                if event.key == pygame.K_t:
+                    apress = False
+                if event.key == pygame.K_y:
+                    bpress = False
+                if event.key == pygame.K_1:
+                    cdpress = False  
+
+                
+                if event.key == pygame.K_2:
+                    depress =  False
+                if event.key == pygame.K_4:
+                    fgpress =  False
+                if event.key == pygame.K_5:
+                    gapress =  False
+                if event.key == pygame.K_6:
+                    abpress =  False
+                if event.key == pygame.K_8:
+                    cd2press = False
+                if event.key == pygame.K_9:
+                    de2press = False
+                if event.key == pygame.K_MINUS:
+                    fg2press = False
+                if event.key == pygame.K_EQUALS:
+                    ga2press = False
+                if event.key == pygame.K_BACKSPACE:
+                    ab2press = False 
+
+
+                if pitch !=3:
+                    if event.key == pygame.K_u:
+                        c2press = False
+                    if event.key == pygame.K_i:
+                        d2press = False
+                    if event.key == pygame.K_o:
+                        e2press = False
+                    if event.key == pygame.K_p:
+                        f2press = False
+                    if event.key == pygame.K_LEFTBRACKET:
+                        g2press = False
+                    if event.key == pygame.K_RIGHTBRACKET:
+                        a2press = False
+                    if event.key == pygame.K_BACKSLASH:
+                        b2press = False       
+                    if event.key == pygame.K_z:
+                        c3press = False       
+                    if event.key == pygame.K_x:
+                        d3press = False       
+                    if event.key == pygame.K_c:
+                        e3press = False       
+                    if event.key == pygame.K_v:
+                        f3press = False       
+                    if event.key == pygame.K_b:
+                        g3press = False       
+                    if event.key == pygame.K_n:
+                        a3press = False       
+                    if event.key == pygame.K_m:
+                        b3press = False       
+                    if event.key == pygame.K_COMMA:
+                        lpress = False  
+
+                    if event.key == pygame.K_s:
+                        cd3press = False
+                    if event.key == pygame.K_d:
+                        de3press = False
+                    if event.key == pygame.K_g:
+                        fg3press = False
+                    if event.key == pygame.K_h:
+                        ga3press = False
+                    if event.key == pygame.K_j:
+                        ab3press = False
+
+
+        keyPress(screen,width,height,keyc,cpress)
+        keyPress(screen,width,height,keyd,dpress)
+        keyPress(screen,width,height,keye,epress)
+        keyPress(screen,width,height,keyf,fpress)
+        keyPress(screen,width,height,keyg,gpress)
+        keyPress(screen,width,height,keya,apress)
+        keyPress(screen,width,height,keyb,bpress)
+        keyPress(screen,width,height,keyc2,c2press)
+        keyPress(screen,width,height,keye2,e2press)
+        keyPress(screen,width,height,keyd2,d2press)
+        keyPress(screen,width,height,keyf2,f2press)
+        keyPress(screen,width,height,keyg2,g2press)
+        keyPress(screen,width,height,keya2,a2press)
+        keyPress(screen,width,height,keyb2,b2press)
+        keyPress(screen,width,height,keyc3,c3press)
+        keyPress(screen,width,height,keyd3,d3press)
+        keyPress(screen,width,height,keye3,e3press)
+        keyPress(screen,width,height,keyf3,f3press)
+        keyPress(screen,width,height,keyg3,g3press)
+        keyPress(screen,width,height,keya3,a3press)
+        keyPress(screen,width,height,keyb3,b3press)
+        keyPress(screen,width,height,keyl,lpress)
+        keyPressB(screen,width,height,keycd,cdpress)
+        keyPressB(screen,width,height,keyde,depress)
+        keyPressB(screen,width,height,keyfg,fgpress)
+        keyPressB(screen,width,height,keyga,gapress)
+        keyPressB(screen,width,height,keyab,abpress)
+        keyPressB(screen,width,height,keycd2,cd2press)
+        keyPressB(screen,width,height,keyde2,de2press)
+        keyPressB(screen,width,height,keyfg2,fg2press)
+        keyPressB(screen,width,height,keyga2,ga2press)
+        keyPressB(screen,width,height,keyab2,ab2press)
+        keyPressB(screen,width,height,keycd3,cd3press)
+        keyPressB(screen,width,height,keyde3,de3press)
+        keyPressB(screen,width,height,keyfg3,fg3press)
+        keyPressB(screen,width,height,keyga3,ga3press)
+        keyPressB(screen,width,height,keyab3,ab3press)
+        
+        
+
+        if angle == 30:
+            screen.blit(volume30,(112,96))
+        elif angle == 60:
+            screen.blit(volume60,(112,96))
+        elif angle == 90:
+            screen.blit(volume90,(120,103))
+        elif angle == 120:
+            screen.blit(volume120,(112,96))
+        elif angle == 150:
+            screen.blit(volume150,(112,96))
+            screen.blit(ONOFF,(277,277))
+        elif angle == -30:
+            screen.blit(volume30n,(112,96))
+        elif angle == -60:
+            screen.blit(volume60n,(112,96))
+        elif angle == -90:
+            screen.blit(volume90n,(120,103))
+        elif angle == -120:
+            screen.blit(volume120n,(112,96))
+        elif angle == -150:
+            screen.blit(volume150n,(112,96))
+
+        if angle != 150:
+            screen.blit(ONOFF,(223,277))
+
+        if spin == 0:
+            if showNotes:
+                screen.blit(Notes1,(0,0))
+            if showLetters:
+                screen.blit(LettersB,(0,0))
+                screen.blit(Letters,(0,-5))
+            
+            pitch = -3
+            screen.blit(pitchButtonDown,(0,0))
+            screen.blit(lightOFF,(131,328))
+                    
+        elif spin == 1:
+            if showNotes:
+                screen.blit(Notes4,(-2,-8))
+            if showLetters:
+                screen.blit(LettersB,(0,0))                
+                screen.blit(Letters,(0,-5))  
+            pitch = 0
+            screen.blit(pitchButtonMid,(0,0))
+            screen.blit(lightOFF,(89,328))
+                    
+        elif spin == 2:
+            if showNotes:
+                screen.blit(Notes7,(0,0))
+            if showLetters: 
+                screen.blit(LettersB,(0,0))
+                screen.blit(Letters7,(0,-5))
+            pitch = 3
+            screen.blit(pitchButtonUp,(0,0))
+            screen.blit(lightOFF,(131,328))
+            screen.blit(lightOFF,(89,328))
+            screen.blit(lightON,(173,328))
+
+        if not showLetters:
+            screen.blit(lightOFF,(224,328))
+        if not showNotes:
+            screen.blit(lightOFF,(273,328))
+        
+
+        clock.tick(fps)
+        pygame.display.update()
+
+    pygame.quit()
+    quit()
+
+loadingScreen()

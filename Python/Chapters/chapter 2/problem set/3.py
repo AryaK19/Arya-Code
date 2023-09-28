@@ -1,0 +1,5 @@
+a = input("First no. " )
+a = int(a)
+b= input("second no." )  
+b= int(b)
+print("Average of",a,"and",b,'is', (a + b)/2)

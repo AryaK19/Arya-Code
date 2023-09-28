@@ -1,0 +1,30 @@
+import pygame
+import os
+
+l,b = (600,900)
+window = pygame.display.set_mode((b,l))
+pygame.display.set_caption("first game")
+color = (100,200,240)
+YSPACESHIP = pygame.image.load(os.path.join('pygame assets', 'spaceship_yellow.png'))
+RSPACESHIP = pygame.image.load(os.path.join('pygame assets', 'spaceship_red.png'))
+YSPACESHIP_resize = pygame.transform.rotate(pygame.transform.scale(YSPACESHIP, (40,40)), 45)
+RSPACESHIP_resize = pygame.transform.rotate(pygame.transform.scale(RSPACESHIP, (40,40)), 315)
+
+def draw_window():
+    window.fill(color)
+    window.blit(YSPACESHIP_resize, (350,350))
+    window.blit(RSPACESHIP_resize, (400,400))
+    pygame.display.update()
+
+def main():
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        draw_window()
+        
+        # If i didnt specify a function here, I'd have to update the display here
+    pygame.quit()
+
+main()

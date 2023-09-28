@@ -1,0 +1,13 @@
+body{
+    background-color: rgb(41, 41, 41);
+} 
+#first{
+    background-color: greenyellow;
+    color: rgb(5, 89, 33);
+}
+#second{
+    color: white;
+}
+.red{
+    background-color: bisque;
+}

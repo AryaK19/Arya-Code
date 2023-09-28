@@ -1,0 +1,19 @@
+         BUY               SELL                HOLD                DOWN       
+1   TARSONS : 28.11  AMARAJABAT : 82.1    MARKSANS : 69.21    RELIANCE : 59.95
+2                     HDFCBANK : 73.66   MOTHERSON : 60.67    GRANULES : 55.57
+3                                        ICICIBANK : 58.86  MCDOWELL-N : 54.33
+4                                       PIDILITIND : 56.32       WIPRO : 54.07
+5                                       PRINCEPIPE : 56.16       TECHM : 52.46
+6                                       BERGEPAINT : 52.17  TATAMOTORS : 51.82
+7                                        SHAREINDIA : 46.4         ITC : 47.76
+8                                        ASIANPAINT : 40.6     HAVELLS : 45.96
+9                                         SUMICHEM : 38.33  LALPATHLAB : 44.03
+10                                        DIVISLAB : 34.89   DEEPAKNTR : 43.41
+11                                                           TATAPOWER : 43.04
+12                                                                 IEX : 42.58
+13                                                              LUXIND : 38.38
+14                                                             POLYCAB : 37.98
+15                                                          HINDUNILVR : 37.68
+16                                                              RADICO : 33.07
+17                                                               DMART : 24.95
+18                                                              RELAXO : 24.88

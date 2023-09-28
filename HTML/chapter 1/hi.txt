@@ -1,0 +1,10 @@
+<!DOCTYPE html>  #Specifies that this is a html file
+<html>           # root of an HTMl page
+<head>           #contains page metadata(info)
+<title>          #well title
+</head>          #closes the html tag(/)
+<body>           #The main body of the page (rendered by the browser)
+<h1>             # heading tag
+<p>              #paragraph tag
+</body>          #closing body
+</html>          #closes the html tag

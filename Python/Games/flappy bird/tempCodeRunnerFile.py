@@ -1,0 +1,1 @@
+ pygame.mixer.Sound('gallery\\audio\\die.wav'

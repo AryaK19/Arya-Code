@@ -1,0 +1,7 @@
+sudo pip install opencv-python
+sudo pip install mediapipe
+sudo pip3 install pyttsx3
+sudo apt install espeak
+sudo apt install portaudio19-dev
+sudo pip3 install pyaudio
+sudo apt-get install alsa-utils

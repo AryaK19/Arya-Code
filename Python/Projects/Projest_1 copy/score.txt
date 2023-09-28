@@ -1,0 +1,3 @@
+YOUR SCORE : 0
+COMP SCORE : 0
+LIMIT      : 1

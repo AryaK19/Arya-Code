@@ -1,0 +1,13 @@
+LSTM
+{
+https://aditi-mittal.medium.com/understanding-rnn-and-lstm-f7cdf6dfc14e
+
+https://www.techtarget.com/searchenterpriseai/feature/CNN-vs-RNN-How-they-differ-and-where-they-overlap
+}
+
+
+
+DL-
+{
+https://doi.org/10.1016/j.compag.2018.02.016
+}
